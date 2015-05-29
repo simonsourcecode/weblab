@@ -1,0 +1,218 @@
+﻿<!DOCTYPE html>
+<!--[if IE 6 ]> <html class="ie6 lte_ie6 lte_ie7 lte_ie8 lte_ie9"> <![endif]--> 
+<!--[if lte IE 6 ]> <html class="lte_ie6 lte_ie7 lte_ie8 lte_ie9"> <![endif]--> 
+<!--[if lte IE 7 ]> <html class="lte_ie7 lte_ie8 lte_ie9"> <![endif]--> 
+<!--[if lte IE 8 ]> <html class="lte_ie8 lte_ie9"> <![endif]--> 
+<!--[if lte IE 9 ]> <html class="lte_ie9"> <![endif]--> 
+<!--[if (gte IE 10)|!(IE)]><!--><html><!--<![endif]-->
+ <head>
+    <title>门户设置</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=gbk" />
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=10,chrome=1" />
+    <link rel="stylesheet" type="text/css" href="/static/theme/13/style.css" />
+    <script type="text/javascript" src="/static/js/ccorrect_btn.js"></script>
+<script type="text/javascript" >
+   var MYOA_JS_SERVER = "";
+   var MYOA_STATIC_SERVER = "";
+</script>
+</head>
+
+
+<link rel="stylesheet" type="text/css" href="/static/theme/13/person_info.css">
+
+<script>
+function func_insert()
+{
+ for (i=0; i<form1.select2.options.length; i++)
+ {
+   if(form1.select2.options[i].selected && form1.select2.options[i].value!="MENU_SORT")
+   {
+     option_text=form1.select2.options[i].text;
+     option_value=form1.select2.options[i].value;
+     option_style_color=form1.select2.options[i].style.color;
+
+     var my_option = document.createElement("OPTION");
+     my_option.text=option_text;
+     my_option.value=option_value;
+     my_option.style.color=option_style_color;
+
+     pos=form1.select2.options.length;
+     form1.select1.options.add(my_option,pos);
+     form1.select2.remove(i);
+     i--;
+  }
+ }//for
+}
+
+function func_delete()
+{
+ for (i=0;i<form1.select1.options.length;i++)
+ {
+   if(form1.select1.options[i].selected)
+   {
+     option_text=form1.select1.options[i].text;
+     option_value=form1.select1.options[i].value;
+
+     var my_option = document.createElement("OPTION");
+     my_option.text=option_text;
+     my_option.value=option_value;
+
+     pos=form1.select2.options.length;
+     form1.select2.options.add(my_option,pos);
+     form1.select1.remove(i);
+     i--;
+  }
+ }//for
+}
+
+function func_select_all1()
+{
+ for (i=form1.select1.options.length-1; i>=0; i--)
+   form1.select1.options[i].selected=true;
+}
+
+function func_select_all2()
+{
+ for (i=form1.select2.options.length-1; i>=0; i--)
+   form1.select2.options[i].selected=true;
+}
+
+function func_up()
+{
+  sel_count=0;
+  for (i=form1.select1.options.length-1; i>=0; i--)
+  {
+    if(form1.select1.options[i].selected)
+       sel_count++;
+  }
+
+  if(sel_count==0)
+  {
+     alert("调整门户顺序时，请选择其中一项！");
+     return;
+  }
+  else if(sel_count>1)
+  {
+     alert("调整门户顺序时，只能选择其中一项！");
+     return;
+  }
+
+  i=form1.select1.selectedIndex;
+
+  if(i!=0)
+  {
+    var my_option = document.createElement("OPTION");
+    my_option.text=form1.select1.options[i].text;
+    my_option.value=form1.select1.options[i].value;
+
+    form1.select1.options.add(my_option,i-1);
+    form1.select1.remove(i+1);
+    form1.select1.options[i-1].selected=true;
+  }
+}
+
+function func_down()
+{
+  sel_count=0;
+  for (i=form1.select1.options.length-1; i>=0; i--)
+  {
+    if(form1.select1.options[i].selected)
+       sel_count++;
+  }
+
+  if(sel_count==0)
+  {
+     alert("调整门户顺序时，请选择其中一项！");
+     return;
+  }
+  else if(sel_count>1)
+  {
+     alert("调整门户顺序时，只能选择其中一项！");
+     return;
+  }
+
+  i=form1.select1.selectedIndex;
+
+  if(i!=form1.select1.options.length-1)
+  {
+    var my_option = document.createElement("OPTION");
+    my_option.text=form1.select1.options[i].text;
+    my_option.value=form1.select1.options[i].value;
+
+    form1.select1.options.add(my_option,i+2);
+    form1.select1.remove(i);
+    form1.select1.options[i+1].selected=true;
+  }
+}
+
+function mysubmit()
+{
+   fld_str="";
+   for (i=0; i< form1.select1.options.length; i++)
+   {
+      options_value=form1.select1.options[i].value;
+      fld_str+=options_value+",";
+    }
+
+   location="submit.php?FLD_STR=" + fld_str;
+}
+</script>
+
+
+<body class="bodycolor">
+<div class="PageHeader"></div>
+<form name="form1">
+<table class="TableTop" width="600">
+   <tr>
+      <td class="left"></td>
+      <td class="center">门户设置</td>
+      <td class="right"></td>
+   </tr>
+</table>
+<table class="TableBlock no-top-border" width="600">
+  <tr class="TableContent">
+    <td align="center">排序</td>
+    <td align="center"><b>登录打开的门户</b></td>
+    <td align="center">选择</td>
+    <td align="center" valign="top"><b>备选门户</b></td>
+  </tr>
+  <tr>
+    <td align="center" class="TableData">
+      <input type="button" class="SmallButton" value=" ↑ " onClick="func_up();">
+      <br><br>
+      <input type="button" class="SmallButton" value=" ↓ " onClick="func_down();">
+    </td>
+    <td valign="top" align="center" class="TableData">
+    <select  name="select1" ondblclick="func_delete();" MULTIPLE style="width:200px;height:200px;">
+      <option value="3">总部门户</option>
+    </select>
+    <input type="button" value=" 全选 " onClick="func_select_all1();" class="SmallButton">
+    </td>
+    <td align="center" class="TableData">
+      <input type="button" class="SmallButton" value=" ← " onClick="func_insert();">
+      <br><br>
+      <input type="button" class="SmallButton" value=" → " onClick="func_delete();">
+    </td>
+
+    <td align="center" valign="top" class="TableData">
+    <select  name="select2" ondblclick="func_insert();" MULTIPLE style="width:200px;height:200px;">
+      <option value="4">信息中心</option>
+      <option value="11">管理中心</option>
+      <option value="5">我的桌面</option>
+      <option value="10">部门门户</option>
+    </select>
+    <input type="button" value=" 全选 " onClick="func_select_all2();" class="SmallButton">
+    </td>
+  </tr>
+
+  <tr class='TableControl'>
+    <td align="center" valign="top" colspan="4" class="TableContent">
+    点击条目时，可以组合CTRL或SHIFT键进行多选<br>
+      <input type="button" class="BigButton" value="保存设置" onClick="mysubmit();">
+    </td>
+  </tr>
+</table>
+</form>
+</body>
+</html>

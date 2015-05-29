@@ -1,0 +1,187 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<title>HMS- eLibrary</title>
+<link rel="stylesheet" type="text/css" href="css/index.css" />
+<!-- The JavaScript -->
+<script type="text/javascript" src="js/alixixi_jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+	$('#example1').bxCarousel({
+		display_num: 4, 
+		move: 1,
+		prev_image: 'images/icon_arrow_left.png',
+		next_image: 'images/icon_arrow_right.png',
+		margin: 10 
+	});
+	$('#banimg').bxCarousel({
+	  
+		display_num: 4, 
+		move: 1, 
+		
+		auto: true, 
+		controls: true,
+		margin: 10,
+		auto_hover: true
+	});
+});
+/*
+bxCarousel v1.0
+Plugin developed by: Steven Wanderski
+*/
+(function($){$.fn.bxCarousel=function(options){var defaults={move:4,display_num:4,speed:500,margin:0,auto:false,auto_interval:2000,auto_dir:'next',auto_hover:false,next_text:'next',next_image:'',prev_text:'prev',prev_image:'',controls:true};var options=$.extend(defaults,options);return this.each(function(){var $this=$(this);var li=$this.find('li');var first=0;var fe=0;var last=options.display_num-1;var le=options.display_num-1;var is_working=false;var j='';var clicked=false;li.css({'float':'left','listStyle':'none','marginRight':options.margin});var ow=li.outerWidth(true);wrap_width=(ow*options.display_num)-options.margin;var seg=ow*options.move;$this.wrap('<div class="bx_container"></div>').width(999999);if(options.controls){if(options.next_image!=''||options.prev_image!=''){var controls='<a href="" class="prev"><img src="'+options.prev_image+'"/></a><a href="" class="next"><img src="'+options.next_image+'"/></a>';}
+else{var controls='<a href="" class="prev">'+options.prev_text+'</a><a href="" class="next">'+options.next_text+'</a>';}}
+$this.parent('.bx_container').wrap('<div class="bx_wrap"></div>').css({'position':'relative','width':wrap_width,'overflow':'hidden'}).before(controls);var w=li.slice(0,options.display_num).clone();var last_appended=(options.display_num+options.move)-1;$this.empty().append(w);get_p();get_a();$this.css({'position':'relative','left':-(seg)});$this.parent().siblings('.next').click(function(){slide_next();clearInterval(j);clicked=true;return false;});$this.parent().siblings('.prev').click(function(){slide_prev();clearInterval(j);clicked=true;return false;});if(options.auto){start_slide();if(options.auto_hover&&clicked!=true){$this.find('li').live('mouseenter',function(){if(!clicked){clearInterval(j);}});$this.find('li').live('mouseleave',function(){if(!clicked){start_slide();}});}}
+function start_slide(){if(options.auto_dir=='next'){j=setInterval(function(){slide_next()},options.auto_interval);}else{j=setInterval(function(){slide_prev()},options.auto_interval);}}
+function slide_next(){if(!is_working){is_working=true;set_pos('next');$this.animate({left:'-='+seg},options.speed,function(){$this.find('li').slice(0,options.move).remove();$this.css('left',-(seg));get_a();is_working=false;});}}
+function slide_prev(){if(!is_working){is_working=true;set_pos('prev');$this.animate({left:'+='+seg},options.speed,function(){$this.find('li').slice(-options.move).remove();$this.css('left',-(seg));get_p();is_working=false;});}}
+function get_a(){var str=new Array();var lix=li.clone();le=last;for(i=0;i<options.move;i++){le++
+if(lix[le]!=undefined){str[i]=$(lix[le]);}else{le=0;str[i]=$(lix[le]);}}
+$.each(str,function(index){$this.append(str[index][0]);});}
+function get_p(){var str=new Array();var lix=li.clone();fe=first;for(i=0;i<options.move;i++){fe--
+if(lix[fe]!=undefined){str[i]=$(lix[fe]);}else{fe=li.length-1;str[i]=$(lix[fe]);}}
+$.each(str,function(index){$this.prepend(str[index][0]);});}
+function set_pos(dir){if(dir=='next'){first+=options.move;if(first>=li.length){first=first%li.length;}
+last+=options.move;if(last>=li.length){last=last%li.length;}}else if(dir=='prev'){first-=options.move;if(first<0){first=li.length+first;}
+last-=options.move;if(last<0){last=li.length+last;}}}});}})(jQuery);
+</script>
+
+ <script type="text/javascript">
+        function addFavorite(URL, title)
+        {
+            if (document.all)
+            { 
+                window.external.addFavorite(URL, title); 
+            }
+            else if (window.sidebar)
+            { 
+                window.sidebar.addPanel(title, URL, ""); 
+            }
+            return false;  
+        }
+        function setHome()
+        {
+            if (document.all)
+            {
+                document.body.style.behavior = 'url(#default#homepage)'; 
+                document.body.setHomePage(document.URL); 
+            }
+        }  
+    </script>
+
+<p>
+<br>
+<div style="position:fixed;left:200px;"><img src="images/logo.gif" /></div>
+<br><br><br />
+<div style="margin-right:30px;">
+ <div style="float:right;"><a href="###" onclick="setHome()">设为首页</a> | <a href="###" onclick="addFavorite(window.location,document.title)">加入收藏</a></div>
+</div>
+</p>
+<br />
+<h1 align="center"><font size="+3" color="orange"> 家庭档案查询系统 </font></h1><br><br><br>
+</head>
+<body >
+
+
+
+
+<style>
+html,body{margin:0;
+height:auto;
+background-image:url(images/bg01.jpg)}
+#left,#right{
+position:absolute;
+top:0;
+width:10%;
+height:100%;}
+#left{left:0;
+background:#a0b3d6;}
+#right{right:0;
+background:#a0b3d6;}
+#main{
+
+}
+#panel{
+margin-left:27%;
+
+}
+#panel div{
+border-width:medium;
+border-style:solid;
+padding:0px;
+margin:3px;//控制div间距
+
+}
+ul{
+list-style:none;
+margin:0px;
+padding:0px; 
+}
+
+</style>
+<div id="left"></div>
+
+<div id="main" style="min-width:500px;height:auto;">
+
+<div id="panel">
+<div style="background-color:orange; height:100px ;width:100px;float:left"><ul><li><a href=""><img src="images/doc (2).jpg" width="96" height="96" /></a></li>
+</ul></div><div style="background-color:cyan; height:100px ;width:100px;float:left"><ul><li><a href=""><img src="images/certificate.jpg" width="96" height="96" /></a></li>
+</ul></div><div style="background-color:#00CCFF; height:100px ;width:100px;float:left"><ul><li><a href=""><img src="images/face.png" width="96" height="96"  /></a></li>
+</ul></div><div style="background-color:#00CC99; height:100px ;width:203px;float:left"><ul><li><a href=""><img src="images/moon.png" width="199" height="96"  /></a></li>
+</ul></div>
+<div style="background-color:#FF6633; height:100px ;width:100px;float:left">div5</div>
+<div style="clear:both;border-width:0"></div>
+<div style="background-color:red; height:100px ;width:100px;float:left">div1</div><div style="background-color:#00CC99; height:100px ;width:100px;float:left">div2</div><div style="background-color:#00CCFF; height:100px ;width:100px;float:left">div3</div><div style="background-color:#0099FF; height:100px ;width:100px;float:left">div3</div><div style="background-color:#00CCFF; height:100px ;width:100px;float:left">div3</div><div style="background-color:orange; height:100px ;width:100px;float:left">div4</div>
+<div style="clear:both;border-width:0"></div>
+<div style="background-color:cyan; height:100px ;width:200px;float:left"><ul><li><a href=""><img src="images/star.png" width="200" height="100" /></a></li>
+</ul></div><div style="background-color:purple; height:100px ;width:100px;float:left"><ul><li><a href=""><img src="images/xx.png" width="96" height="96" /></a></li>
+</ul></div><div style="background-color:purple; height:100px ;width:100px;float:left"><ul><li><a href=""><img src="images/heart.png" width="96" height="96" /></a></li>
+</ul></div><div style="background-color:orange; height:100px ;width:100px;float:left"><ul><li><a href=""><img src="images/Dolly01.JPG" width="192" height="150" /></a></li>
+</ul></div>
+<div style="background-color:#00CC99; height:100px ;width:100px;float:left">div4</div>
+<div style="clear:both;border-width:0"></div>
+
+</div>
+
+
+    <!--<div class="examples_body">
+    <div class="bx_wrap"><a class="prev" href="">left</a><a class="next" href="">right</a>
+        <div class="bx_container">
+            <ul id="example1">
+            <li><img height="107" width="107" alt="LUFFY" src="images/pic_one.jpg"></li>
+            <li><img height="107" width="107" alt="ZORO" src="images/pic_two.jpg"></li>
+            <li><img height="107" width="107" alt="NAMI" src="images/pic_three.jpg"></li>
+            <li><img height="107" width="107" alt="SANJI" src="images/pic_four.jpg"></li>
+            <li><img height="107" width="107" alt="USOPP" src="images/pic_five.jpg"></li>
+            <li><img height="107" width="107" alt="Chopper" src="images/pic_six.jpg"></li>
+            <li><img height="107" width="107" alt="ROBIN" src="images/pic_seven.jpg"></li>
+            </ul>
+        </div>
+    </div>
+    </div>-->
+	<br />
+	<br />
+	<br />
+    <div class="examples_body" >
+    <div class="bx_wrap"><a class="prev" href="">left</a><a class="next" href="">right</a>
+        <div class="bx_container">
+            <ul id="banimg" >
+            <li><a href="library.php?id=simon"><img height="108" width="108" alt="simon" src="images/Simon.jpg"></a></li>
+            <li><a href="library.php?id=dolly"><img height="108" width="108" alt="dolly" src="images/Dolly.jpg"></a></li>
+            <li><img height="108" width="108" alt="default" src="images/default.jpg"></li>
+            
+            <li><img height="108" width="108" alt="ROBIN" src="images/pic00007.jpg"></li>
+            </ul>
+        </div>
+    </div>
+    </div>
+	
+
+	
+</div>	
+<div id="right"></div>
+<p align="center" ><font color="#000000"> Copyright © 2014 HM.COM. All Rights Reserved. </font></p>
+</body>
+</html>

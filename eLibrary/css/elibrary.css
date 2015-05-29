@@ -1,0 +1,299 @@
+/*  
+Theme Name: Airos Chou
+Theme URI: http://www.sunflowamedia.com
+Description: Web Design examples
+*/
+
+*{
+	margin: 0;
+	padding: 0;
+}
+body{
+	background:#FFFFFF;
+	font-family: "Myriad Pro", "Trebuchet MS", Helvetica, sans-serif;
+	font-size: 12px;
+	color: #fff;
+	overflow: hidden;
+}
+h2.title_name {
+	font-family: normal Georgia,'Times New Roman',Times,serif;
+	font-weight: normal;
+	font-size: 4em;
+	margin: 0;
+	padding: 50px 0 20px 0;
+	text-align: center;
+}
+h2.title_name span {
+	font-family: normal Georgia,'Times New Roman',Times,serif;
+	color: #f9f66d;
+	font-size: 0.9em;
+}
+h2.title_name small {
+	color: #AAAAAA;
+	display: block;
+	font-family: normal Verdana,Arial,Helvetica,sans-serif;
+	font-size: 0.2em;
+	letter-spacing: 1.0em;
+	text-transform: uppercase;
+}
+h3 {
+color:#0099CC;
+}
+p.copy_right {
+	width: 750px;
+	margin: 30px auto 0 auto;
+	clear: both;
+	font-size: 1.2em;
+	letter-spacing: 1px;
+	text-align: center;
+}
+p.copy_right a {
+	color: #1D68AF;
+}
+p.copy_right a:hover {
+	text-decoration: none;
+}
+
+/* examples_body */
+.examples_body {
+	width: 750px;
+	margin: 100px auto;
+	clear: both;
+	position: relative;
+}
+.bx_wrap {
+	margin-left: 70px;
+}
+.bx_wrap ul img { border: 2px solid #DDD; }
+
+.bx_wrap a.prev {
+	width: 27px;
+	height: 34px;
+	line-height: 17px;
+	outline-style: none;
+	outline-width: 0;
+	position: absolute;
+	top: 40px;
+	left: 75px;
+	text-indent: -9999px;
+	background: url(../images/icon_arrow_left.png) no-repeat left;
+}
+.bx_wrap a.prev:hover {
+	background: url(../images/icon_arrow_left.png) no-repeat right;
+}
+.bx_wrap a.next {
+	width: 27px;
+	height: 34px;
+	line-height: 17px;
+	left: 647px;
+	outline-style: none;
+	outline-width: 0;
+	position: absolute;
+	top: 40px;
+	text-indent: -9999px;
+	background: url(../images/icon_arrow_right.png) no-repeat right;
+}
+.bx_wrap a.next:hover {
+	background: url(../images/icon_arrow_right.png) no-repeat left;
+}
+
+
+<style>
+html,body{margin:0;
+height:auto;}
+#left,#right{
+
+position:absolute;
+top:0;
+width:20%;
+height:auto;}
+#left{left:0;
+background:#a0b3d6;}
+#right{right:0;
+background:#a0b3d6;}
+#main{}
+</style>
+<div id="left"></div>
+
+<div id="main" style="min-width:300px;overflow:scroll;">
+<div>
+<!-- top menu  Ö§³Ö chrome firefox -->
+<style>
+*{
+	margin:0;
+	padding:0;
+}
+.clear:after {
+    clear: both;
+    content: ".";
+    display: block;
+    height: 0;
+    visibility: hidden;
+}
+nav{
+	display:inline-block;
+	border:1px solid #505255;
+	border-bottom: 1px solid #282C2F;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	margin:5px;
+	-webkit-box-shadow:1px 1px 3px #292929;
+    -moz-box-shadow:1px 1px 3px #292929;
+}
+li{
+	list-style:none;
+	float:left;
+	border-right: 1px solid #2E3235;
+	position: relative;
+	/*background: -moz-linear-gradient(top, #fff, #555D5F 2% ,#555D5F  50%,#3E4245 100%);
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#fff), color-stop(2%, #555D5F), color-stop(50%, #555D5F),to(#3E4245));*/
+	background:#555D5F;
+}
+li:hover{
+	/*background: -moz-linear-gradient(top, #fff, #3E4245 2% ,#555D5F  80%,#555D5F 100%);
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#fff), color-stop(2%, #3E4245), color-stop(80%, #3E4245),to(#555D5F));*/
+	background:#3E4245;
+	-moz-transition: background 1s ease-out;
+	-webkit-transition: background 1s ease-out;
+}
+li a{
+	display:block;
+	height:40px;
+	line-height:40px;
+	padding:0 30px;
+	font-size:12px;
+	color:#fff;
+	text-shadow: 0px -1px 0px #000;
+	text-decoration:none;
+	white-space:nowrap;
+	border-left: 1px solid #999E9F;
+    border-top: 1px solid #999E9F;
+	-moz-border-top-left-radius: 2px;
+	-webkit-border-top-left-radius: 2px;
+	
+	z-index:100;
+}
+li > a{
+	position:relative;
+}
+li.first a{
+	-moz-border-radius-topleft: 4px;
+	-moz-border-radius-bottomleft: 4px;
+	-webkit-border-top-left-radius: 4px;
+	-webkit-border-bottom-left-radius: 4px;
+}
+li.last{
+	border-right: 0 none;
+}
+
+
+dl{
+	position:absolute;
+	display:block;
+	top:40px;
+	left: -25px;
+	
+	width:165px;
+	
+	background:#222222;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	
+	-webkit-box-shadow:1px 1px 3px #292929;
+    -moz-box-shadow:1px 1px 3px #292929;
+	
+	z-index:10;
+            
+}
+li:hover dl{
+	top:50px;
+	display:block;
+	width:145px;
+	padding:10px;
+}
+dl a{
+	background:transparent;
+	border:0 none;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-transition: background 0.5s ease-out;
+	-webkit-transition: background 0.5s ease-out;
+	
+	z-index:50;
+}
+dl a:hover{
+	color:#FFF;
+	background:#999E9F;
+	-moz-transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
+	-webkit-transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+dd{
+	margin-top:-40px;
+	opacity:0;
+	width:145px;
+	-webkit-transition-property:all;
+	/*-webkit-transition-timing-function: cubic-bezier(5,0,5,0);*/
+	-moz-transition-property: all;
+	/*-moz-transition-timing-function: cubic-bezier(5,0,5,0);*/
+	/*-webkit-transition-delay:5s;
+	-moz-transition-delay:5s;*/
+}
+li:hover dd{
+	margin-top:0;
+	opacity:1;
+}
+li dd:nth-child(1){
+	-webkit-transition-duration: 0.1s;
+	-moz-transition-duration: 0.1s;
+}
+li dd:nth-child(2){
+	-webkit-transition-duration: 0.2s;
+	-moz-transition-duration: 0.2s;
+}
+li dd:nth-child(3){
+	-webkit-transition-duration: 0.3s;
+	-moz-transition-duration: 0.3s;
+}
+li dd:nth-child(4){
+	-webkit-transition-duration: 0.4s;
+	-moz-transition-duration: 0.4s;
+}
+dt{
+	display:none;
+	margin-top:-25px;
+	padding-top:15px;
+	height:10px;
+}
+li:hover dt{
+	display:block;
+}
+.Darrow{
+	float:right;
+	margin:18px 10px 0 0;
+	border-width:5px;
+	border-color:#FFF transparent transparent transparent;
+	border-style:solid;
+	width:0;
+	height:0;
+	line-height:0;
+	overflow:hidden;
+	
+	cursor:pointer;
+	
+	text-shadow: 0px -1px 0px #000;
+	
+	-webkit-box-shadow:0px -1px 0px #000;
+    -moz-box-shadow:0px -1px 0px #000;
+}
+.arrow{
+	margin:0 auto;
+	margin-top:-5px;
+	display:block;
+	width:10px;
+	height:10px;
+	background:#222222;
+	-webkit-transform: rotate(45deg);
+	-moz-transform: rotate(45deg);
+}
+</style>
+<!-- top menu -->

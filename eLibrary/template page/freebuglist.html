@@ -1,0 +1,589 @@
+<script src="/Scripts/jquery-1.3.2.min.js" type="text/javascript"></script>
+
+    <link href="/Content/thickbox.css" rel="stylesheet" type="text/css" />
+
+    <script src="/Scripts/thickbox.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+    var pid=13516; 
+    var isnull=" 不能为空";
+    var SaveSuccessfully="保存成功"; 
+    var SaveFirst='请先保存'; 
+    var CheckInput='不能有特殊字符';
+    var AreYouSure='确定??';
+    var Loading='加载中...... ';
+    var Save="保存";
+    var CannotDelete='不能删除';
+    var Success="成功";
+    var Failure="失败";
+    var Cancel="取消";
+//     --------------------------------- 
+                     function AddVersion()
+                     { 
+                     if (document.getElementById("input_v"))
+                       {
+                         alert(SaveFirst);
+                         return;
+                       }
+                       if ( document.getElementById("add_li1")) return;
+                       $("#ul_version").append("<tr id='add_li1'><td colspan='3'><input id='v_name' type='text' /> <a class='Blue' href='javascript:AddV();'> "+Save+"</a>  <a class='Blue' href='javascript:Cancle_AddV();' >"+Cancel+"</a></td></tr>");
+                     }
+                     function Cancle_AddV()
+                     {
+                       $("#add_li1").remove();
+                     }
+                     
+                     function AddV()
+                     {
+                       var name=$("#v_name").val().trim();  
+                       if (name=="") return; 
+                            $.ajax({
+                            url:"/ProjectVersion/Add", 
+                            type:"POST",
+                            data:"name="+name+"&pid="+pid,
+                            success:function(data){ 
+                                var id=data;
+                               $("#add_li1").remove();
+                               var s="<tr id='li_v_"+id+"' class='GrayBackground'><td>"+name+"</td><td align='center'><a href='javascript:EditV("+id+")'><img src='/Content/images/pencil.gif'></a></td>";
+                               s+=" <td align='center'> <a  href='javascript:DelV("+id+")'> <img src='/Content/images/delete_icon.gif'></a></td></tr>";
+                               $("#ul_version").append(s);
+                             } , error:function(){ alert(CheckInput);}
+                            }); 
+                     }
+                     
+                     function DelV(id)
+                     {
+                     if (!confirm(AreYouSure))
+                         return; 
+                          $.ajax({
+                            url:"/ProjectVersion/Delete/"+pid+"/"+id,
+                            success:function(data){
+                                var re=data; 
+                                if (re.toLowerCase()=='true')
+                                  $("#li_v_"+id+"").remove();
+                                else
+                                  alert(CannotDelete);
+                              } 
+                            }); 
+                     }
+                     
+                     var tempv;
+                     function EditV(id)
+                     {
+                     if (document.getElementById("input_v")||document.getElementById("v_name"))
+                       {
+                         alert(SaveFirst);
+                         return;
+                        }
+                       tempv=$("#li_v_"+id+"").html();  
+                       var name=$("#li_v_"+id+" td:first").html().trim(); 
+                       $("#li_v_"+id+" td:first").html("<input  id='input_v' value=\""+name+"\" type='text' /> <a class='Blue' href='javascript:UpdateV("+id+");'>  "+Save+"</a>  <a class='Blue' href='javascript:Cancle_UpdateV("+id+");' >"+Cancel+"</a>");
+                     }
+                     function Cancle_UpdateV(id)
+                     {
+                        $("#li_v_"+id+"").html(tempv);
+                     }
+                     function UpdateV(id)
+                     {
+                       var newName=$("#input_v").val().trim();
+                       if (newName=="")
+                           return;
+                       $.ajax({
+                            url:"/ProjectVersion/Update", 
+                            type:"POST",
+                            data:"name="+newName+"&id="+id,
+                            success:function(data){
+                               if (data>0)  
+                                $("#li_v_"+id+" td:first").html(newName); 
+                                else
+                                Cancle_UpdateV(id)
+                             } , error:function(){ alert(CheckInput);}
+                            });                   
+                     }
+     
+     //------------------------Moudle-----------------  
+                     function AddMoudle()
+                     { 
+                       if (document.getElementById("input_m"))
+                       {
+                         alert(SaveFirst);
+                         return;
+                        }
+                       if ( document.getElementById("add_li2")) return; 
+                           $.ajax({
+                            url:"/Project/GetProjectMember/"+pid+"",
+                              cache: false,
+                              success:function(data){ 
+                                $("#ul_moudle").append("<tr id='add_li2'><td><input size='8' id='m_name' type='text' /></td><td colspan='3'> "+data+" <a class='Blue' href='javascript:AddP();'> "+Save+"</a> <a class='Blue' href='javascript:Cancle_AddP();'>"+Cancel+"</a></td></tr>");
+                                }
+                              }); 
+                     }
+                     function Cancle_AddP()
+                     {
+                      $("#add_li2").remove();
+                     }
+                     function DelMD(id)
+                     {
+                       if (!confirm(AreYouSure))
+                         return; 
+                          $.ajax({
+                            url:"/ProjectModule/Delete/"+pid+"/"+id,
+                            success:function(data){
+                                if (data.toLowerCase()=='true')
+                                $("#li_m_"+id+"").remove();
+                                else
+                                  alert(CannotDelete);
+                              } 
+                            }); 
+                     }
+                     var tempmd;
+                     function EditMD(id)
+                     {
+                      if (document.getElementById("input_m")||document.getElementById("m_name"))
+                       {
+                         alert(SaveFirst);
+                         return;
+                        }
+                        tempmd=$("#li_m_"+id+"").html();  
+                        var mid=$("#li_m_"+id+" td:eq(1)").html().trim(); 
+                        var name= $("#li_m_"+id+" td:first").html().trim();   
+                           $.ajax({
+                            url:"/Project/GetProjectMember/"+pid+"",  cache: false,
+                              success:function(data){ 
+                                  $("#li_m_"+id+" td:first").html("<input size='8' id='input_m' value='"+name+"' type='text' />");
+                                  $("#li_m_"+id+" td:eq(1)").html(data+"<a class='Blue' href='javascript:UpdateMD("+id+");'>  "+Save+"</a>  <a class='Blue' href='javascript:Cancle_UpdateMD("+id+");' > "+Cancel+"</a> ");
+                                  $("#li_m_"+id+"  option").each(function(i){ 
+                                     ($(this).html().trim()==mid)?$(this).attr("selected","selected"):"";}) 
+                                } 
+                              });  
+                  
+                     }
+                     function Cancle_UpdateMD(id)
+                     {
+                       $("#li_m_"+id+"").html(tempmd);
+                     }
+                     
+                     function UpdateMD(id)
+                     {
+                       var newName=$("#input_m").val().trim();
+                       if (newName=="")
+                        return;
+                       var mid=$("#m_person").val();
+                        var temp= document.getElementById("m_person");
+                       var mpt= temp.options[temp.selectedIndex].text;  
+                       $.ajax({
+                            url:"/ProjectModule/Update", 
+                            type:"POST",
+                            data:"mid="+mid+"&name="+newName+"&id="+id,
+                            success:function(data){
+                              if (data) 
+                                {
+                                  $("#li_m_"+id+" td:first").html(newName);
+                                  $("#li_m_"+id+" td:eq(1)").html(mpt); 
+                                }
+                             } , error:function(){ alert(CheckInput);}
+                            });                   
+                     }
+                     function AddP()
+                     {
+                       var name=$("#m_name").val().trim(); 
+                       var mid=$("#m_person").val(); 
+                       var temp= document.getElementById("add_li2").getElementsByTagName("select")[0];
+                       var mpt= temp.options[temp.selectedIndex].text;     
+                       if (name=="") return;
+                       $.ajax({
+                            url:"/ProjectModule/Add", 
+                            type:"POST",
+                            data:"name="+name+"&mid="+mid+"&pid="+pid,
+                            success:function(data){
+                                var id=data; 
+                                 $("#add_li2").remove();
+                                 var s="<tr id='li_m_"+id+"' class='GrayBackground'><td>"+name+"</td><td>"+mpt+"</td>";
+                                 s+="<td><a  href='javascript:EditMD("+id+")' ><img src='/Content/images/pencil.gif'></a></td><td><a  href='javascript:DelMD("+id+")'> <img src='/Content/images/delete_icon.gif'></a> </td></tr>";
+                                 $("#ul_moudle").append(s);
+                              }, error:function(){ alert(CheckInput);} 
+                            });
+                        }
+                        
+      //-------------Select-------------- 
+   
+    
+    function SelectAdd()
+    {    
+        var ns=new Array(); 
+         $("#sl option").each(function(){
+              if ($(this).attr("selected"))
+               {
+                var v=$(this).val(); 
+                if (!IsAdd(v))ns.push(v);
+                }            
+         });
+         if(ns.length>0)
+         {  
+             $("#m_info").html(Loading);
+             $.ajax({
+                        url:"/Project/AddProjectMember", 
+                        type:"POST", 
+                        data:"mids="+ns+"&pid="+pid,
+                        success:function(data){  
+                          if (data>0)GetTeamProjectMember(true); 
+                           else $("#m_info").html(Failure);
+                           } 
+                        });
+         }
+    }
+     
+    function SelectDel()
+    {    
+        var ns=new Array(); 
+         $("#sr option").each(function(i){  
+             if ( $(this).attr("selected") )
+             { 
+               var v=$(this).val();
+               if (v!="43229"&&v!="43229")ns.push(v);  
+             }
+         })
+       if(ns.length>0)
+         {  
+             $("#m_info").html(Loading);
+             $.ajax({
+                        url:"/Project/DelProjectMember", 
+                        type:"POST", 
+                        cache:false,
+                        data:"mids="+ns+"&pid="+pid,
+                        success:function(data){  
+                         if (data>0) GetTeamProjectMember(true); 
+                         else $("#m_info").html(Failure);
+                           } 
+                        });
+         }
+    }
+
+
+    function AdminAdd()
+    {    
+        var ns=new Array(); 
+         $("#sr option").each(function(){
+              if ($(this).attr("selected"))
+               {
+                var v=$(this).val(); 
+                if (!IsAdd(v,"sr2"))ns.push(v);
+                }            
+         });
+         if(ns.length>0)
+         {  
+             $("#m_info2").html(Loading);
+             $.ajax({
+                        url:"/Project/AddProjectAdmin", 
+                        type:"POST", 
+                        data:"mids="+ns+"&pid="+pid,
+                        success:function(data){  
+                          if (data>0)GetTeamProjectMember(false,true); 
+                           else $("#m_info2").html(Failure);
+                           } 
+                        });
+         }
+    }
+
+    function AdminDel()
+    {    
+        var ns=new Array(); 
+         $("#sr2 option").each(function(i){  
+             if ( $(this).attr("selected") )
+             { 
+               var v=$(this).val();
+               if (v!="43229"&&v!="43229")ns.push(v);  
+             }
+         })
+       if(ns.length>0)
+         {  
+             $("#m_info2").html(Loading);
+             $.ajax({
+                        url:"/Project/DelProjectAdmin", 
+                        type:"POST", 
+                        cache:false,
+                        data:"mids="+ns+"&pid="+pid,
+                        success:function(data){  
+                         if (data>0) GetTeamProjectMember(false,true); 
+                         else $("#m_info2").html(Failure);
+                           } 
+                        });
+         }
+    }
+    
+      function IsAdd(value,sr)
+    { 
+    if (sr==null || sr==undefined) sr="sr";
+      var flag=false;
+      $("#" + sr + " option").each(function(){ if ($(this).val()==value) flag=true; });
+      return flag;
+    }
+    
+    function SelectItem(id,value)
+    {
+        var temp=document.getElementById(id);
+        var len=temp.options.length;
+        for (var i=0;i<len;i++)
+        {
+        if (temp.options[i].value==value)
+        { temp.options[i].selected=true; break;}
+        }
+    }
+ 
+ //----------BaseInfo------------
+ function SaveBaseInfo()
+ {
+    var ProjectName="项目名称"; 
+    var oEditor = FCKeditorAPI.GetInstance("templet");    
+    var temp= escape(oEditor.GetXHTML(true)); 
+    var name=$("#pname_input").val().trim();
+     if (name.trim()=="")
+    {  
+     $("#baseinfo").html(ProjectName+isnull);
+     return;
+    } 
+    $("#baseinfo").html(Loading);
+    $.ajax({
+                url:"/Project/SaveBaseInfo", 
+                type:"POST", 
+                data:"name="+name+"&temp="+temp+"&pid="+pid,
+                success:function(data){
+                $("#baseinfo").html(SaveSuccessfully);
+                }
+           });
+                 
+ }
+    </script>
+
+    <!-- start of content -->
+    <div class="Content">
+        <div class="Right">
+            <div class="Bugicon Midbox">
+                项目信息</div>
+            <!--start of solution-->
+            <div class="Solution ">
+                <table>
+                    <tr>
+                        <td>
+                            <b class="BiggestFont Black">
+                                项目名称:</b>
+                        </td>
+                        <td>
+                            <input id="pname_input" type="text" value="内部网站建设" style="width: 250px" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b>
+                                Bug模板:</b>
+                        </td>
+                        <td>
+                            <input type="hidden" id="templet___Config" value="" />
+<input type="hidden" id="templet" name="templet" value="" />
+<iframe id="templet___Frame" src="/FCKeditor/editor/fckeditor.html?InstanceName=templet&amp;Toolbar=Basic" width="300" height="200" frameborder="no" scrolling="no"></iframe>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                        </td>
+                        <td style="text-align: center">
+                            <a href="javascript:SaveBaseInfo();" class="Buttom"><span>
+                                保存</span></a> <span style="color: Red" id="baseinfo">
+                                </span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <!--end of solution-->
+            <!--start of solution-->
+            <div class="Solution ScaleBox left">
+                <div class="BlueBorder_btm">
+                    <!-- -->
+                </div>
+                <table id="ul_version" border="0" width="100%" cellpadding="10" cellspacing="0" class="Bug box">
+                    <tr class="BlueBackground Black BugTitle TableTop">
+                        <td width="60%">
+                            <b>
+                                版本</b>
+                        </td>
+                        <td width="20%" align="center">
+                            修改
+                        </td>
+                        <td width="20%" align="center">
+                            删除
+                        </td>
+                    </tr>
+                    
+                    <tr class="GrayBackground" id="li_v_20205">
+                        <td>
+                            默认版本
+                        </td>
+                        <td align="center">
+                            <a href="javascript:EditV(20205)">
+                                <img src="/Content/images/pencil.gif" /></a>
+                        </td>
+                        <td align="center">
+                            <a href="javascript:DelV(20205)">
+                                <img src="/Content/images/delete_icon.gif" /></a>
+                        </td>
+                    </tr>
+                    
+                </table>
+                <a href="javascript:AddVersion();" class="Buttom  "><span>
+                    <img src="/Content/images/add_icon.gif" />
+                    添加</span></a>
+            </div>
+            <!--end of solution-->
+            <!--start of solution-->
+            <div class="Solution ScaleBox right">
+                <div class="BlueBorder_btm">
+                    <!-- -->
+                </div>
+                <table id="ul_moudle" border="0" width="100%" cellpadding="10" cellspacing="0" class="Bug box">
+                    <tr class="BlueBackground Black BugTitle TableTop">
+                        <td>
+                            <b>
+                                模块</b>
+                        </td>
+                        <td>
+                            <b>
+                                处理人</b>
+                        </td>
+                        <td>
+                            修改
+                        </td>
+                        <td>
+                            删除
+                        </td>
+                    </tr>
+                    
+                    <tr class="GrayBackground" id="li_m_36772">
+                        <td>
+                            默认模块
+                        </td>
+                        <td>
+                            3
+                        </td>
+                        <td>
+                            <a href="javascript:EditMD(36772)" class="Blue">
+                                <img src="/Content/images/pencil.gif" /></a>
+                        </td>
+                        <td>
+                            <a href="javascript:DelMD(36772)" class=" Blue">
+                                <img src="/Content/images/delete_icon.gif" /></a>
+                        </td>
+                    </tr>
+                    
+                </table>
+                <a href="javascript:AddMoudle();" class="Buttom  "><span>
+                    <img src="/Content/images/add_icon.gif" />
+                    添加</span></a>
+            </div>
+            <!--end of solution-->
+            <div class="clear">
+            </div>
+            <!--start of solution-->
+            <div class="Solution ">
+                <div class="BlueBackground MLine Negative">
+                    <b class="Black">
+                        项目人员</b></div>
+                <span id="page1">
+                    <img src="/Content/images/loading.gif" /></span>
+                <br class="clear">
+                <div class="OverviewBox margintop10">
+                    <img src="/Content/images/person_icon.gif">
+                    添加项目成员
+                    <p>
+                    </p>
+                    <div class="left">
+                        <div class="left">
+                            <textarea cols="25" rows="6" id="newMembers" name="newMembers"></textarea>
+                        </div>
+                        <div class="nametip DLine ">
+                            <div class="mid">
+                                添加新成员(输入Email,换行隔开)
+                            </div>
+                            <div class="btm">
+                                <!-- -->
+                            </div>
+                        </div>
+                        <br class=" clear" />
+                        <br />
+                        <a href="javascript:AddMemberToProject();" class="Buttom icon_bigest "><span>
+                            添加</span></a> <a class="Buttom icon_bigest" href="javascript:history.go(-1);">
+                                <span>
+                                    返回</span></a> <font color="red">
+                                        </font>
+                    </div>
+                </div>
+                <br class=" clear" />
+                <div class="OverviewBox margintop10">
+                    <div class="left" style="color: Red;" id="newMailsInfo">
+                    </div>
+                </div>
+                <!--end of page -->
+                <div class="clear">
+                    <!-- -->
+                </div>
+            </div>
+            <!--end of solution-->
+        </div>
+        <div class="clear">
+            <!-- -->
+        </div>
+    </div>
+    <!-- start of content -->
+    <div class="clear">
+        <!-- -->
+    </div>
+    <br />
+
+    <script type="text/javascript">
+    
+       //--------------------AddMemberToProject--------------------
+    function AddMemberToProject()
+    { 
+       if(document.getElementById("a_vip"))
+        {
+           Click('a_vip');
+           return;
+        }
+        if(document.getElementById("a_rewnew"))
+        {
+           Click('a_rewnew');
+           return;
+       }
+      
+        var emails=$("#newMembers").val().replace('\n',','); 
+        if (emails.trim()=="")
+         { 
+           $("#newMailsInfo").html(isnull);
+           return;
+         } 
+         $("#newMailsInfo").html(Loading);
+          $.ajax({
+              url:"/Project/AddMemberToProject",type:"post",data:"pid="+pid+"&newMembers="+emails,
+              success:function(data){   
+                 $("#newMailsInfo").html(Success);
+                 $("#newMembers").val("");
+                 GetTeamProjectMember();
+              }
+             }); 
+    }
+    
+    function GetTeamProjectMember(b,c)
+    { 
+        $.ajax({url:"/Project/GetTeamProjectMember/"+pid,cache:false,
+            success: function (data) {
+                $("#page1").html(data);
+                if (b) $("#m_info").html(Success);
+                if (c) $("#m_info2").html(Success); 
+             }
+          })
+    }
+    GetTeamProjectMember();
+    </script>
+
+    
+    </div>
+    <!-- end of wrapper-->
